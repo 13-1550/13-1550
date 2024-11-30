@@ -1,5 +1,6 @@
 Lab1:
 
+Data analysis with pandas
 Introuction to using panda 
 
 first we read the file as is and the problem was that the column names were missing.
@@ -37,3 +38,21 @@ conclusion:
 
 in this lab we learned how to extract, edit, modify, and group data.
 
+
+Lab2: 	
+NLP pipeline
+
+we sampled data from twitter containing negative and positive tweets.
+
+then we visiualize the data using Matplotlib's pyplot library.
+
+then we applied preprocessing techniques such as:
+-removing stop words
+-stemming
+-removing hyperlinks
+-removing special characters
+-stemming
+-vectorzation(TF-IDF)
+
+
+Lab3:
