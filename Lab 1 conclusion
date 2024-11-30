@@ -1,0 +1,39 @@
+Lab1:
+
+Introuction to using panda 
+
+first we read the file as is and the problem was that the column names were missing.
+
+then we added column names and the so file became more cohearant.
+
+we checked the data types of the columns an found that two types of data were apparent: object and float64.
+issue is that some columns that contain numbers appeared as data type= object.
+
+we found that the issue is that there are some missig values
+
+rating            2
+review_count      2
+isbn            477
+booktype          2
+author_url        2
+year              7
+genre_urls       62
+dir               0
+rating_count      2
+name              2
+
+504 rows were missing data
+
+we cleaned the data by replacing nulls with 0 or unknown
+
+
+we changed the data types of the year an review count to int64
+
+next we split the data to extract the authors name an genre
+
+next we grouped the data to find out which books were best rated each year
+
+conclusion:
+
+in this lab we learned how to extract, edit, modify, and group data.
+
