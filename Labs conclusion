@@ -56,3 +56,142 @@ then we applied preprocessing techniques such as:
 
 
 Lab3:
+
+The main purpose behind this lab is to get familiar with NLP techniques including Rule-based NLP, Regex, and Word Embedding.
+
+1.
+we first generated a bill where we also turned words into numbers to get the proper information from the input 
+example:
+apple : 5.00$
+input = "I want two apples"
+{"two":2}
+\\as well as lowering cases, preprocessing, and tokenization
+
+Product  quantity   Unit price  total
+apple       2	      5.00     5.00*2=10.00
+
+total = 10.00$
+
+we also generated a bill from input containing the product, quantity, unit price, and total price
+
+2.
+we applied some preprocessing techniques 
+
+2.1 One  hot encoding
+one-hot encoding is converting categorical information into a format that can be fed into ML algorithms to improve the prediction accuracy.
+
+we used an Arabic database for this part
+jamalon's dataset that contains Arabic books with their categories and prices
+
+2.2
+BoW to count the frequency of words
+
+2.3
+TF-IDF to evaluate the importance of a word in a dataset by its frequency
+
+2.4 CBOW
+to predict a target word from its surrounding words
+
+example output:
+Similarity dictionary for 5 randomly chosen words:
+{'علينا': ('عليهم', 0.7063708901405334), 'الاطعمه': ('الفواكه', 0.6871410608291626), 'للتعليق': ('غرار', 0.4859757423400879), 'تفسر': ('يفسر', 0.5396071076393127), 'اعمالنا': ('اعمالي', 0.5734694600105286)}
+we also visualized it to better understand the relation between words
+
+2.5 Skip-gram
+opposite of CBOW skip-gram is for predicting the surrounding based on a target word
+
+in this instance we specifically used w2v_SG_300_3_400_10.model
+we also visualized this model
+
+
+3. Fasttext
+it is a library for word embeddings in natural language processing 
+we randomly selected 5 words and got their most similar words based on their score
+then we got them as a numpy array so we can visualize it 
+
+
+Lab4.
+In this lab we compared data centric and model centric approaches
+we used a dataset of reviews and their labels being 'good' or 'bad'
+
+First, to compare, we used a text classifier pipeline using SGD
+we got an accuracy of 76.2%
+
+4.1. we used a Random forest classifier with grid search to optimize hyperparameters
+and got an accuracy score of 84.2% which better than the previous
+
+upon inspecting the training data we noticed it wasn't good as some reviews were mislabeled due to noise, therefore we applied some preprocessing techniques to clean the data.
+we lower cased the text, removed stopwords and punctuations, then we removed HTMLs and trained the new clean data, then the accuracy significantly improved as it was 97.30%.
+
+Lab5.
+
+5.1 Intro to topic modeling 
+first we loaded data from a zip file that contains 5 papers
+we dropped some columns and cleaned the data 
+we also used world cloud to visualize the most common words to check if the data was cleaned well
+
+then we prepared the data for LDA analysis by removing stopwords and putting the data in a list 
+after that we created a dictionary and a corpus 
+
+we started the LDA model training and selected 10 topics
+
+after that we started analyzing our model and saved the results in an html file.
+
+5.2 BERTopic topic modeling
+in this part of the lab we learned how to use BERTopic 
+
+we started by installing bertopic then fetching a dataset, we then preprocessed the data and filtered it.
+we extracted embeddings using a sentenceTransformer and reduced dimensionality using a UMAP model, and used HDBSCAN to identify clusters and reduce embeddings.
+Then we tokenized the topics and created topic representation.
+Finally we got the topics probabilities and visualized the topics. lastly we got the 'c_v' coherence rate that is based on cosine similarity between words in the top-N most frequent words of each topic, which was 0.64 and 'u_mass' coherence which is based on word co-occurrence statistics, measured from the corpus itself, without relying on external word embeddings, it was -0.21
+
+5.3 Evaluate topic model
+in this part we learned how to evaluate topic models, and understood the different coherence measures.
+
+first we loaded up the data, cleaned it, and used phrase modeling by building the bigram(detects common two word combinations) and trigram(detects common three word combinations) models
+
+then we transformed the data
+first we created a dictionary and a corpus of the lemmatized data, and a term document frequency.
+
+after that we build the LDA model and got the coherence score of 0.30.
+
+after that we did hyperparameter tuning of topic numbers, document-topic density, and word-topic density. we started by training the LDA model using specific parameters being: the corpus, dictionary, number of topics, document distribution, word distribution, number of docs processed in each training chunk, and the number of iterations, as well as calculating the coherence score using 'c_v' to combine statistics and semantics. Then we created a directory of the results and another of the grid, we also defined the topic ranges and defined the validation sets. this part had 4 loops: validation corpus loop, number of topics loop, alpha parameter loop for the document-topic density, and beta parameter loop for the topic-word density. after that we visualized the data
+
+Lab6.
+In this lab we used generative AI to generate a dialogue summary.
+
+first we set up the kernel then we summarized the dialogue without prompts using a dataset from huggingface
+
+we printed some dialogs with their summary
+then we loaded the FLAT-T5 model as pretrained model and downloaded it tokenizer, after that we tested the tokenizer.
+
+After that we started generating a summary again without prompt engineering.
+Then we did the same thing but this time it was with a prompt in three different ways
+
+6.1. Zero Shot Inference
+this is where you take the dialog and convert it into an instruction prompt which showed an improvement compared to what we did before 
+
+6.2.  Zero Shot Inference with the Prompt Template from FLAN-T5
+
+we used FLAN-T5 as it has many prompt templates which was even better but still could improve
+
+6.3.  Summarizing Dialogue with One Shot and Few Shot Inference
+it is "in-context learning" and puts the model into a state that understands our specific task. 
+
+6.3.a.   One Shot Inference
+we built a function that takes a list of example_indices_full and generate a prompt with full examples it was significantly better but still can improve 
+
+6.3.b. Few Shot Interference
+we added two more  full dialogue-summary pairs to our prompt. Then applied Few Shot Interference 
+it was the same as one shot.
+
+-
+we later on changed the configuration parameters to see different outputs
+we used 
+
+generation_config = GenerationConfig(max_new_tokens=50)
+generation_config = GenerationConfig(max_new_tokens=10)
+generation_config = GenerationConfig(max_new_tokens=50, do_sample=True, temperature=0.1)generation_config = GenerationConfig(max_new_tokens=50, do_sample=True, temperature=0.5)
+generation_config = GenerationConfig(max_new_tokens=50, do_sample=True, temperature=1.0)
+
+and the output seemed better and more coherent.
